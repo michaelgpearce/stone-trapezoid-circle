@@ -1,0 +1,93 @@
+---
+layout: default
+---
+
+<div class="home">
+  <h1 class="page-heading">{{ page.title }}</h1>
+
+  <script>
+    function draw() {
+      const pi = Math.PI
+      const drawing = document.getElementById('drawing')
+      const length = 12.0
+      const depth = 8.0
+      const diameter = 11.0 * 12
+
+      const outerCircumference = pi * diameter
+      const innerCircumference = pi * (diameter - depth - depth)
+
+      const stoneCountFloat = outerCircumference / length
+      const ratio = innerCircumference / outerCircumference
+      const outerLength = outerCircumference / stoneCountFloat
+      const innerLength = innerCircumference / stoneCountFloat
+
+      const stoneCount = Math.floor(stoneCountFloat)
+
+      const longLength = length / (1 + ratio)
+      const shortLength = length - longLength
+
+      const stoneSvgs = new Array(stoneCount).fill(undefined).map((_, index) => {
+        return buildStoneSvg(
+          index,
+          stoneCount,
+          longLength,
+          shortLength,
+          depth,
+          diameter,
+        )
+      })
+
+      drawing.innerHTML = [
+        '<svg height="600" width="600" style="border: 1px solid red" viewBox="0 0 100 100" preserveAspectRatio="none">',
+        buildCircleSvg(),
+        stoneSvgs.join(''),
+        '</svg>'
+      ].join('')
+    }
+
+    function buildCircleSvg() {
+      return '<circle cx="50" cy="50" r="50" style="fill:blue; stroke:blue; stroke-width:1; fill-opacity: .75;" />'
+    }
+
+    function buildStoneSvg(stoneIndex, stoneCount, longLength, shortLength, depth, diameter) {
+      const scaledLongLength = longLength / diameter * 100
+      const scaledShortLength = shortLength / diameter * 100
+      const scaledDepth = depth / diameter * 100
+
+      const stoneIndexRatio = 1.0 * stoneIndex / stoneCount
+      const rotation = stoneIndexRatio * 360
+      const topLeft = [50 - scaledLongLength, 0]
+      const topRight = [50 + scaledLongLength, 0]
+      const bottomRight = [50 + scaledShortLength, depth]
+      const bottomLeft = [50 - scaledShortLength, depth]
+
+      return buildTrapezoidSvg(topLeft, topRight, bottomRight, bottomLeft, rotation)
+    }
+
+    function buildTrapezoidSvg(topLeft, topRight, bottomRight, bottomLeft, rotation) {
+      const transform = `rotate(${rotation} 50 50)`
+
+      return [
+        '<polygon points="',
+        buildPoint(topLeft),
+        buildPoint(topRight),
+        buildPoint(bottomRight),
+        buildPoint(bottomLeft),
+        `" style="fill:red; stroke: none; fill-opacity: .75" transform="${transform}" />`
+      ].join('')
+    }
+
+    function buildPoint(point) {
+      return [
+        point[0],
+        point[1],
+      ].join(',') + ' '
+    }
+
+  </script>
+
+  <div id="drawing" />
+
+  <script type="text/javascript">draw()</script>
+
+</div>
