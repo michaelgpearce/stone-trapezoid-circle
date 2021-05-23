@@ -139,9 +139,21 @@ layout: default
       document.getElementById('shortSide').innerHTML = (shortLength * 2.0 - kerf).toFixed(3)
     }
 
+    function syncFormToParameters() {
+      const form = document.getElementById('form')
+      const searchParams = new URLSearchParams(window.location.search)
+      const params = ['kerf', 'length', 'depth', 'diameter', 'removeStones']
+
+      params.forEach((param) => {
+        const value = searchParams.get(param)
+        if (value) {
+          form[param].value = value
+        }
+      })
+    }
   </script>
 
-  <form id="form" onsubmit="draw(); return false">
+  <form id="form">
     <label for="length">Stone Length (inches)</label>
     <input type="text" id="length" name="length" value="12">
     <br>
@@ -179,6 +191,9 @@ layout: default
 
   <div id="drawing" />
 
-  <script type="text/javascript">draw()</script>
+  <script type="text/javascript">
+    syncFormToParameters()
+    draw()
+  </script>
 
 </div>
