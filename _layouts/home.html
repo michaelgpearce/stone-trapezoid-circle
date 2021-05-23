@@ -22,8 +22,8 @@ layout: default
 
       const ratio = innerCircumference / outerCircumference
 
-      const longLength = length / (1 + ratio)
-      const shortLength = length - longLength
+      const longLength = (length - kerf) / (1 + ratio)
+      const shortLength = (length - kerf) - longLength
       const anglePerStone = calculateAnglePerStone(longLength, shortLength, depth)
 
       const stoneCount = Math.floor(360.0 / anglePerStone) - removeStones
@@ -131,12 +131,12 @@ layout: default
     function updateStoneInfo(longLength, shortLength, kerf) {
       const halfKerf = kerf * 0.5
 
-      document.getElementById('longCut').innerHTML = longLength.toFixed(3)
-      document.getElementById('shortCut').innerHTML = shortLength.toFixed(3)
-      document.getElementById('longCutWithKerf').innerHTML = (longLength - halfKerf).toFixed(3)
-      document.getElementById('shortCutWithKerf').innerHTML = (shortLength - halfKerf).toFixed(3)
-      document.getElementById('longSide').innerHTML = (longLength * 2.0 - kerf).toFixed(3)
-      document.getElementById('shortSide').innerHTML = (shortLength * 2.0 - kerf).toFixed(3)
+      document.getElementById('longCut').innerHTML = (longLength + halfKerf).toFixed(3)
+      document.getElementById('shortCut').innerHTML = (shortLength + halfKerf).toFixed(3)
+      document.getElementById('longCutWithKerf').innerHTML = longLength.toFixed(3)
+      document.getElementById('shortCutWithKerf').innerHTML = shortLength.toFixed(3)
+      document.getElementById('longSide').innerHTML = (longLength * 2.0).toFixed(3)
+      document.getElementById('shortSide').innerHTML = (shortLength * 2.0).toFixed(3)
     }
 
     function syncFormToParameters() {
@@ -184,7 +184,7 @@ layout: default
   <div id="cutLengthsWithKerf">
     <span id="longCutWithKerf"></span> inches / <span id="shortCutWithKerf"></span> inches
   </div>
-  <h5>Side Lengths (with kerf)</h5>
+  <h5>Combined Trapezoid Side Lengths (with kerf)</h5>
   <div id="sideLengths">
     <span id="longSide"></span> inches / <span id="shortSide"></span> inches
   </div>
