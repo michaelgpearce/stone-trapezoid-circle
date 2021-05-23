@@ -32,10 +32,10 @@ layout: default
       const padding = 6
 
       const viewBox = [
-        -padding,
-        -padding,
-        diameter + padding * 2,
-        diameter + padding * 2,
+        0 - radius - padding,
+        0 - radius - padding,
+        2.0 * (radius + padding),
+        2.0 * (radius + padding),
       ].join(' ')
 
       const stoneSvgs = new Array(stoneCount).fill(undefined).map((_, index) => {
@@ -69,24 +69,24 @@ layout: default
     function buildCircleSvg(radius) {
       const style = 'fill:blue; fill-opacity: .75;' // stroke:blue; stroke-width:1;
 
-      return `<circle cx="${radius}" cy="${radius}" r="${radius}" style="${style}" />`
+      return `<circle cx="0" cy="0" r="${radius}" style="${style}" />`
     }
 
     function buildStoneSvg(stoneIndex, longLength, shortLength, depth, radius) {
       const rotation = stoneIndex * calculateAnglePerBlock(longLength, shortLength, depth)
-      const transform = `rotate(${rotation} ${radius} ${radius})`
+      const transform = `rotate(${rotation})`
 
       return [
         `<g  transform="${transform}">`,
         buildTrapezoidSvg(
-          [radius - longLength, 0],
-          [radius + longLength, 0],
-          [radius + shortLength, depth],
-          [radius - shortLength, depth],
+          [-longLength, -radius],
+          [longLength, -radius],
+          [shortLength, -radius + depth],
+          [-shortLength, -radius + depth],
         ),
         buildLineSvg(
-          [radius, 0],
-          [radius, depth],
+          [0, -radius],
+          [0, -radius + depth],
         ),
         '</g>'
       ].join('')
