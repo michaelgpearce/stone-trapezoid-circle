@@ -24,8 +24,9 @@ layout: default
 
       const longLength = length / (1 + ratio)
       const shortLength = length - longLength
+      const anglePerStone = calculateAnglePerStone(longLength, shortLength, depth)
 
-      const stoneCount = calculateStoneCount(longLength, shortLength, depth) - removeStones
+      const stoneCount = Math.floor(360.0 / anglePerStone) - removeStones
 
       updateStoneCount(stoneCount)
       updateStoneInfo(longLength, shortLength, kerf)
@@ -48,17 +49,24 @@ layout: default
           radius,
         )
       })
+      const stonesSvg = [
+        `<g transform="rotate(${calculateStoneRotation(stoneCount, anglePerStone)})">`,
+        stoneSvgs,
+        '</g>',
+      ].join('')
 
       drawing.innerHTML = [
         `<svg style="max-width: 600px; max-height: 600px; border: 1px solid black" viewBox="${viewBox}" preserveAspectRatio="none">`,
         buildCircleSvg(radius),
-        stoneSvgs.join(''),
+        stonesSvg,
         '</svg>'
       ].join('')
     }
 
-    function calculateStoneCount(longLength, shortLength, depth) {
-      return Math.floor(360.0 / calculateAnglePerStone(longLength, shortLength, depth))
+    function calculateStoneRotation(stoneCount, anglePerStone) {
+      const unusedAngle = 360.0 - (stoneCount * anglePerStone)
+
+      return unusedAngle * 0.5 + anglePerStone * 0.5 + 180.0
     }
 
     function calculateAnglePerStone(longLength, shortLength, depth) {
