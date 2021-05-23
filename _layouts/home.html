@@ -10,7 +10,8 @@ layout: default
       const pi = Math.PI
       const drawing = document.getElementById('drawing')
       const form = document.getElementById('form')
-      const length = parseFloat(form.length.value)
+      const kerf = parseFloat(form.kerf.value)
+      const length = parseFloat(form.length.value) - kerf
       const depth = parseFloat(form.depth.value)
       const diameter = parseFloat(form.diameter.value) * 12.0
       const radius = diameter / 2.0
@@ -137,6 +138,9 @@ layout: default
     <br>
     <label for="diameter">Circle Diameter (feet)</label>
     <input type="text" id="diameter" name="diameter" value="11">
+    <br>
+    <label for="kerf">Cut Thickness - (a.k.a. Kerf) (inches)</label>
+    <input type="text" id="kerf" name="kerf" value="0.125">
     <br>
     <input type="submit">
   </form>
