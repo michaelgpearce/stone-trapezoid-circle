@@ -25,6 +25,9 @@ layout: default
 
       const stoneCount = calculateStoneCount(longLength, shortLength, depth)
 
+      updateStoneCount(stoneCount)
+      updateStoneInfo(longLength, shortLength)
+
       const padding = 6
 
       const viewBox = [
@@ -111,6 +114,18 @@ layout: default
         point[1],
       ].join(',') + ' '
     }
+
+    function updateStoneCount(stoneCount) {
+      document.getElementById('blockCount').innerHTML = stoneCount
+    }
+
+    function updateStoneInfo(longLength, shortLength) {
+      document.getElementById('longCut').innerHTML = longLength.toFixed(2)
+      document.getElementById('shortCut').innerHTML = shortLength.toFixed(2)
+      document.getElementById('longSide').innerHTML = (longLength * 2.0).toFixed(2)
+      document.getElementById('shortSide').innerHTML = (shortLength * 2.0).toFixed(2)
+    }
+
   </script>
 
   <form id="form" onsubmit="draw(); return false">
@@ -125,6 +140,19 @@ layout: default
     <br>
     <input type="submit">
   </form>
+
+  <h4>Block Count</h4>
+  <div id="blockCount"></div>
+
+  <h4>Block Cuts</h4>
+  <h5>Cut Lengths</h5>
+  <div id="cutLengths">
+    <span id="longCut"></span> inches / <span id="shortCut"></span> inches
+  </div>
+  <h5>Side Lengths</h5>
+  <div id="sideLengths">
+    <span id="longSide"></span> inches / <span id="shortSide"></span> inches
+  </div>
 
   <div id="drawing" />
 
