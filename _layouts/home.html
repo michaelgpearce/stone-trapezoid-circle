@@ -11,7 +11,7 @@ layout: default
       const drawing = document.getElementById('drawing')
       const form = document.getElementById('form')
       const kerf = parseFloat(form.kerf.value)
-      const length = parseFloat(form.length.value) - kerf
+      const length = parseFloat(form.length.value)
       const depth = parseFloat(form.depth.value)
       const diameter = parseFloat(form.diameter.value) * 12.0
       const radius = diameter / 2.0
@@ -27,7 +27,7 @@ layout: default
       const stoneCount = calculateStoneCount(longLength, shortLength, depth)
 
       updateStoneCount(stoneCount)
-      updateStoneInfo(longLength, shortLength)
+      updateStoneInfo(longLength, shortLength, kerf)
 
       const padding = 6
 
@@ -120,11 +120,15 @@ layout: default
       document.getElementById('blockCount').innerHTML = stoneCount
     }
 
-    function updateStoneInfo(longLength, shortLength) {
-      document.getElementById('longCut').innerHTML = longLength.toFixed(2)
-      document.getElementById('shortCut').innerHTML = shortLength.toFixed(2)
-      document.getElementById('longSide').innerHTML = (longLength * 2.0).toFixed(2)
-      document.getElementById('shortSide').innerHTML = (shortLength * 2.0).toFixed(2)
+    function updateStoneInfo(longLength, shortLength, kerf) {
+      const halfKerf = kerf * 0.5
+
+      document.getElementById('longCut').innerHTML = longLength.toFixed(3)
+      document.getElementById('shortCut').innerHTML = shortLength.toFixed(3)
+      document.getElementById('longCutWithKerf').innerHTML = (longLength - halfKerf).toFixed(3)
+      document.getElementById('shortCutWithKerf').innerHTML = (shortLength - halfKerf).toFixed(3)
+      document.getElementById('longSide').innerHTML = (longLength * 2.0 - kerf).toFixed(3)
+      document.getElementById('shortSide').innerHTML = (shortLength * 2.0 - kerf).toFixed(3)
     }
 
   </script>
@@ -139,7 +143,7 @@ layout: default
     <label for="diameter">Circle Diameter (feet)</label>
     <input type="text" id="diameter" name="diameter" value="11">
     <br>
-    <label for="kerf">Cut Thickness - (a.k.a. Kerf) (inches)</label>
+    <label for="kerf">Cut Thickness (a.k.a. Kerf) (inches)</label>
     <input type="text" id="kerf" name="kerf" value="0.125">
     <br>
     <input type="submit">
@@ -153,7 +157,11 @@ layout: default
   <div id="cutLengths">
     <span id="longCut"></span> inches / <span id="shortCut"></span> inches
   </div>
-  <h5>Side Lengths</h5>
+  <h5>Cut Lengths (with kerf)</h5>
+  <div id="cutLengthsWithKerf">
+    <span id="longCutWithKerf"></span> inches / <span id="shortCutWithKerf"></span> inches
+  </div>
+  <h5>Side Lengths (with kerf)</h5>
   <div id="sideLengths">
     <span id="longSide"></span> inches / <span id="shortSide"></span> inches
   </div>
