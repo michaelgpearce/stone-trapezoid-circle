@@ -57,10 +57,10 @@ layout: default
     }
 
     function calculateStoneCount(longLength, shortLength, depth) {
-      return Math.floor(360.0 / calculateAnglePerBlock(longLength, shortLength, depth))
+      return Math.floor(360.0 / calculateAnglePerStone(longLength, shortLength, depth))
     }
 
-    function calculateAnglePerBlock(longLength, shortLength, depth) {
+    function calculateAnglePerStone(longLength, shortLength, depth) {
       const angleRadians = Math.atan((longLength - shortLength) / depth) * 2.0
 
       return angleRadians * 180.0 / Math.PI
@@ -73,7 +73,7 @@ layout: default
     }
 
     function buildStoneSvg(stoneIndex, longLength, shortLength, depth, radius) {
-      const rotation = stoneIndex * calculateAnglePerBlock(longLength, shortLength, depth)
+      const rotation = stoneIndex * calculateAnglePerStone(longLength, shortLength, depth)
       const transform = `rotate(${rotation})`
 
       return [
@@ -117,7 +117,7 @@ layout: default
     }
 
     function updateStoneCount(stoneCount) {
-      document.getElementById('blockCount').innerHTML = stoneCount
+      document.getElementById('stoneCount').innerHTML = stoneCount
     }
 
     function updateStoneInfo(longLength, shortLength, kerf) {
@@ -134,10 +134,10 @@ layout: default
   </script>
 
   <form id="form" onsubmit="draw(); return false">
-    <label for="length">Block Length (inches)</label>
+    <label for="length">Stone Length (inches)</label>
     <input type="text" id="length" name="length" value="12">
     <br>
-    <label for="depth">Block Depth (inches)</label>
+    <label for="depth">Stone Depth (inches)</label>
     <input type="text" id="depth" name="depth" value="8">
     <br>
     <label for="diameter">Circle Diameter (feet)</label>
@@ -149,10 +149,10 @@ layout: default
     <input type="submit">
   </form>
 
-  <h4>Block Count</h4>
-  <div id="blockCount"></div>
+  <h4>Stone Count</h4>
+  <div id="stoneCount"></div>
 
-  <h4>Block Cuts</h4>
+  <h4>Stone Cuts</h4>
   <h5>Cut Lengths</h5>
   <div id="cutLengths">
     <span id="longCut"></span> inches / <span id="shortCut"></span> inches
