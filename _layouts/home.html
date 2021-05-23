@@ -12,60 +12,72 @@ layout: default
       const length = 12.0
       const depth = 8.0
       const diameter = 11.0 * 12
+      const radius = diameter / 2.0
 
       const outerCircumference = pi * diameter
-      const innerCircumference = pi * (diameter - depth - depth)
+      const innerCircumference = pi * (diameter - depth * 2)
 
-      const stoneCountFloat = outerCircumference / length
       const ratio = innerCircumference / outerCircumference
-      const outerLength = outerCircumference / stoneCountFloat
-      const innerLength = innerCircumference / stoneCountFloat
-
-      const stoneCount = Math.floor(stoneCountFloat)
 
       const longLength = length / (1 + ratio)
       const shortLength = length - longLength
 
+      const stoneCount = calculateStoneCount(longLength, shortLength, depth)
+
+      const viewBox = [
+        0,
+        0,
+        diameter,
+        diameter,
+      ].join(' ')
+
       const stoneSvgs = new Array(stoneCount).fill(undefined).map((_, index) => {
         return buildStoneSvg(
           index,
-          stoneCount,
           longLength,
           shortLength,
           depth,
-          diameter,
+          radius,
         )
       })
 
       drawing.innerHTML = [
-        '<svg height="600" width="600" style="border: 1px solid red" viewBox="0 0 100 100" preserveAspectRatio="none">',
-        buildCircleSvg(),
+        `<svg height="600" width="600" style="border: 1px solid black" viewBox="${viewBox}" preserveAspectRatio="none">`,
+        buildCircleSvg(radius),
         stoneSvgs.join(''),
         '</svg>'
       ].join('')
     }
 
-    function buildCircleSvg() {
-      return '<circle cx="50" cy="50" r="50" style="fill:blue; stroke:blue; stroke-width:1; fill-opacity: .75;" />'
+    function calculateStoneCount(longLength, shortLength, depth) {
+      return Math.floor(360.0 / calculateAnglePerBlock(longLength, shortLength, depth))
     }
 
-    function buildStoneSvg(stoneIndex, stoneCount, longLength, shortLength, depth, diameter) {
-      const scaledLongLength = longLength / diameter * 100
-      const scaledShortLength = shortLength / diameter * 100
-      const scaledDepth = depth / diameter * 100
+    function calculateAnglePerBlock(longLength, shortLength, depth) {
+      const angleRadians = Math.atan((longLength - shortLength) / depth) * 2.0
 
-      const stoneIndexRatio = 1.0 * stoneIndex / stoneCount
-      const rotation = stoneIndexRatio * 360
-      const topLeft = [50 - scaledLongLength, 0]
-      const topRight = [50 + scaledLongLength, 0]
-      const bottomRight = [50 + scaledShortLength, depth]
-      const bottomLeft = [50 - scaledShortLength, depth]
-
-      return buildTrapezoidSvg(topLeft, topRight, bottomRight, bottomLeft, rotation)
+      return angleRadians * 180.0 / Math.PI
     }
 
-    function buildTrapezoidSvg(topLeft, topRight, bottomRight, bottomLeft, rotation) {
-      const transform = `rotate(${rotation} 50 50)`
+    function buildCircleSvg(radius) {
+      const style = 'fill:blue; fill-opacity: .75;' // stroke:blue; stroke-width:1;
+
+      return `<circle cx="${radius}" cy="${radius}" r="${radius}" style="${style}" />`
+    }
+
+    function buildStoneSvg(stoneIndex, longLength, shortLength, depth, radius) {
+      const rotation = stoneIndex * calculateAnglePerBlock(longLength, shortLength, depth)
+
+      const topLeft = [radius - longLength, 0]
+      const topRight = [radius + longLength, 0]
+      const bottomRight = [radius + shortLength, depth]
+      const bottomLeft = [radius - shortLength, depth]
+
+      return buildTrapezoidSvg(topLeft, topRight, bottomRight, bottomLeft, radius, rotation)
+    }
+
+    function buildTrapezoidSvg(topLeft, topRight, bottomRight, bottomLeft, radius, rotation) {
+      const transform = `rotate(${rotation} ${radius} ${radius})`
 
       return [
         '<polygon points="',
@@ -73,7 +85,7 @@ layout: default
         buildPoint(topRight),
         buildPoint(bottomRight),
         buildPoint(bottomLeft),
-        `" style="fill:red; stroke: none; fill-opacity: .75" transform="${transform}" />`
+        `" style="fill:red; stroke:black; stroke-width:0.1; fill-opacity: .75" transform="${transform}" />`
       ].join('')
     }
 
