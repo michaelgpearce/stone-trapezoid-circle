@@ -67,25 +67,38 @@ layout: default
 
     function buildStoneSvg(stoneIndex, longLength, shortLength, depth, radius) {
       const rotation = stoneIndex * calculateAnglePerBlock(longLength, shortLength, depth)
-
-      const topLeft = [radius - longLength, 0]
-      const topRight = [radius + longLength, 0]
-      const bottomRight = [radius + shortLength, depth]
-      const bottomLeft = [radius - shortLength, depth]
-
-      return buildTrapezoidSvg(topLeft, topRight, bottomRight, bottomLeft, radius, rotation)
-    }
-
-    function buildTrapezoidSvg(topLeft, topRight, bottomRight, bottomLeft, radius, rotation) {
       const transform = `rotate(${rotation} ${radius} ${radius})`
 
+      return [
+        `<g  transform="${transform}">`,
+        buildTrapezoidSvg(
+          [radius - longLength, 0],
+          [radius + longLength, 0],
+          [radius + shortLength, depth],
+          [radius - shortLength, depth],
+        ),
+        buildLineSvg(
+          [radius, 0],
+          [radius, depth],
+        ),
+        '</g>'
+      ].join('')
+    }
+
+    function buildLineSvg(point1, point2) {
+      return [
+        `<line x1="${point1[0]}" y1="${point1[1]}" x2="${point2[0]}" y2="${point2[1]}" style="stroke:black; stroke-width:0.1; stroke-dasharray:1" />`
+      ].join('')
+    }
+
+    function buildTrapezoidSvg(topLeft, topRight, bottomRight, bottomLeft) {
       return [
         '<polygon points="',
         buildPoint(topLeft),
         buildPoint(topRight),
         buildPoint(bottomRight),
         buildPoint(bottomLeft),
-        `" style="fill:red; stroke:black; stroke-width:0.1; fill-opacity: .75" transform="${transform}" />`
+        `" style="fill:red; stroke:black; stroke-width:0.1; fill-opacity: .75" />`
       ].join('')
     }
 
