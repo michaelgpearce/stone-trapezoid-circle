@@ -83,10 +83,9 @@ layout: default
 
     function buildStoneSvg(stoneIndex, longLength, shortLength, depth, radius) {
       const rotation = stoneIndex * calculateAnglePerStone(longLength, shortLength, depth)
-      const transform = `rotate(${rotation})`
 
       return [
-        `<g  transform="${transform}">`,
+        `<g transform="rotate(${rotation})">`,
         buildTrapezoidSvg(
           [-longLength, -radius],
           [longLength, -radius],
