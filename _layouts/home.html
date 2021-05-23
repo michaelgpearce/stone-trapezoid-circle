@@ -24,11 +24,13 @@ layout: default
 
       const stoneCount = calculateStoneCount(longLength, shortLength, depth)
 
+      const padding = 6
+
       const viewBox = [
-        0,
-        0,
-        diameter,
-        diameter,
+        -padding,
+        -padding,
+        diameter + padding * 2,
+        diameter + padding * 2,
       ].join(' ')
 
       const stoneSvgs = new Array(stoneCount).fill(undefined).map((_, index) => {
