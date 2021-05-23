@@ -9,9 +9,10 @@ layout: default
     function draw() {
       const pi = Math.PI
       const drawing = document.getElementById('drawing')
-      const length = 12.0
-      const depth = 8.0
-      const diameter = 11.0 * 12
+      const form = document.getElementById('form')
+      const length = parseFloat(form.length.value)
+      const depth = parseFloat(form.depth.value)
+      const diameter = parseFloat(form.diameter.value) * 12.0
       const radius = diameter / 2.0
 
       const outerCircumference = pi * diameter
@@ -110,8 +111,20 @@ layout: default
         point[1],
       ].join(',') + ' '
     }
-
   </script>
+
+  <form id="form" onsubmit="draw(); return false">
+    <label for="length">Block Length (inches)</label>
+    <input type="text" id="length" name="length" value="12">
+    <br>
+    <label for="depth">Block Depth (inches)</label>
+    <input type="text" id="depth" name="depth" value="8">
+    <br>
+    <label for="diameter">Circle Diameter (feet)</label>
+    <input type="text" id="diameter" name="diameter" value="11">
+    <br>
+    <input type="submit">
+  </form>
 
   <div id="drawing" />
 
