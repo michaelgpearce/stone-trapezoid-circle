@@ -31,7 +31,7 @@ layout: default
       updateStoneCount(stoneCount)
       updateStoneInfo(longLength, shortLength, kerf)
 
-      const padding = 6
+      const padding = 3
 
       const viewBox = [
         0 - radius - padding,
@@ -56,7 +56,7 @@ layout: default
       ].join('')
 
       drawing.innerHTML = [
-        `<svg style="max-width: 600px; max-height: 600px; border: 1px solid black" viewBox="${viewBox}" preserveAspectRatio="none">`,
+        `<svg style="width: 100%; max-height: 100%" viewBox="${viewBox}" preserveAspectRatio="none">`,
         buildCircleSvg(radius),
         stonesSvg,
         '</svg>'
@@ -153,43 +153,68 @@ layout: default
     }
   </script>
 
-  <form id="form">
-    <label for="length">Stone Length (inches)</label>
-    <input type="text" id="length" name="length" value="12">
-    <br>
-    <label for="depth">Stone Depth (inches)</label>
-    <input type="text" id="depth" name="depth" value="8">
-    <br>
-    <label for="diameter">Circle Diameter (feet)</label>
-    <input type="text" id="diameter" name="diameter" value="11">
-    <br>
-    <label for="kerf">Cut Thickness (a.k.a. Kerf) (inches)</label>
-    <input type="text" id="kerf" name="kerf" value="0.125">
-    <br>
-    <label for="removeStones">Remove Stones</label>
-    <input type="text" id="removeStones" name="removeStones" value="10">
-    <br>
-    <input type="submit" value="Update">
-  </form>
+  <div class="formContainer">
+    <form id="form">
+      <div>
+        <label for="length">Stone Length (inches)</label>
+        <input type="text" id="length" name="length" value="12">
+      </div>
 
-  <h4>Stone Count</h4>
-  <div id="stoneCount"></div>
+      <div>
+        <label for="depth">Stone Depth (inches)</label>
+        <input type="text" id="depth" name="depth" value="8">
+      </div>
 
-  <h4>Stone Cuts</h4>
-  <h5>Cut Lengths</h5>
-  <div id="cutLengths">
-    <span id="longCut"></span> inches / <span id="shortCut"></span> inches
-  </div>
-  <h5>Cut Lengths (with kerf)</h5>
-  <div id="cutLengthsWithKerf">
-    <span id="longCutWithKerf"></span> inches / <span id="shortCutWithKerf"></span> inches
-  </div>
-  <h5>Combined Trapezoid Side Lengths (with kerf)</h5>
-  <div id="sideLengths">
-    <span id="longSide"></span> inches / <span id="shortSide"></span> inches
+      <div>
+        <label for="diameter">Circle Diameter (feet)</label>
+        <input type="text" id="diameter" name="diameter" value="11">
+      </div>
+
+      <div>
+        <label for="kerf">Kerf (cut thickness) (inches)</label>
+        <input type="text" id="kerf" name="kerf" value="0.125">
+      </div>
+
+      <div>
+        <label for="removeStones">Remove Stones</label>
+        <input type="text" id="removeStones" name="removeStones" value="10">
+      </div>
+
+      <input type="submit" value="Update">
+    </form>
+
+    <div class="stoneInfo">
+      <div>
+        <h5>Stone Count</h5>
+        <div id="stoneCount"></div>
+      </div>
+
+      <div>
+        <h5>Cut Lengths</h5>
+        <div id="cutLengths">
+          <span id="longCut"></span> in. / <span id="shortCut"></span> in.
+        </div>
+      </div>
+
+      <div>
+        <h5>Cut Lengths (kerf removed)</h5>
+        <div id="cutLengthsWithKerf">
+          <span id="longCutWithKerf"></span> in. / <span id="shortCutWithKerf"></span> in.
+        </div>
+      </div>
+
+      <div>
+        <h5>Full Trapezoid Lengths (kerf removed)</h5>
+        <div id="sideLengths">
+          <span id="longSide"></span> in. / <span id="shortSide"></span> in.
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div id="drawing" />
+  <div class="drawingContainer">
+    <div id="drawing" />
+  </div>
 
   <script type="text/javascript">
     syncFormToParameters()

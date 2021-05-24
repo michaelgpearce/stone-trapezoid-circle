@@ -1,0 +1,71 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@import "minima";
+
+.home {
+  display: flex;
+  justify-content: space-between;
+
+  @include media-query($on-palm) {
+    display: block;
+  }
+}
+
+.formContainer {
+  min-width: 420px;
+
+  form {
+    margin-bottom: 20px;
+
+    > div {
+      label {
+        display: inline-block;
+        width: 250px;
+      }
+    }
+
+    input[type=submit] {
+      margin-top: 10px;
+    }
+  }
+
+  .stoneInfo {
+    border: 5px solid #aaa;
+    background-color: #ccc;
+    padding: 5px;
+
+    > div {
+      width: 400px;
+
+      h5 {
+        display: inline-block;
+        width: 240px;
+      }
+
+      > div {
+        width: 155px;
+        display: inline-block;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.drawingContainer {
+  flex-grow: 1;
+  margin-left: 20px;
+
+  #drawing {
+    min-width: 420px;
+    max-width: 600px;
+    max-height: 600px;
+  }
+}
+
+@include media-query($on-palm) {
+  .drawingContainer {
+    flex-grow: 0;
+  }
+}
