@@ -38,10 +38,18 @@
 
     > div {
       width: 400px;
+      border-bottom: 1px solid #aaa;
+      margin-bottom: 10px;
+
+      &:last-child {
+        border-bottom: 0;
+        margin-bottom: 0;
+      }
 
       h5 {
         display: inline-block;
         width: 240px;
+        font-weight: 600;
       }
 
       > div {
@@ -59,8 +67,8 @@
 
   #drawing {
     min-width: 420px;
-    max-width: 600px;
-    max-height: 600px;
+    max-width: 700px;
+    max-height: 700px;
   }
 }
 
