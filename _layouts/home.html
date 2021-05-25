@@ -8,6 +8,14 @@ layout: default
   <div class="formContainer">
     <form id="form">
       <div>
+        <label for="length">Number of Cuts</label>
+        <select name="cutCount">
+          <option value="1">One</option>
+          <option value="2" selected>Two</option>
+        </select>
+      </div>
+
+      <div>
         <label for="length">Stone Length (inches)</label>
         <input type="text" id="length" name="length" value="12">
       </div>
@@ -41,7 +49,7 @@ layout: default
         <div id="stoneCount"></div>
       </div>
 
-      <div>
+      <div class="cutCountContainer cutCount1">
         <h5>Cut Lengths</h5>
         <div id="cutLengths">
           <span id="longCut"></span> in. / <span id="shortCut"></span> in.
@@ -49,7 +57,7 @@ layout: default
         </div>
       </div>
 
-      <div>
+      <div class="cutCountContainer cutCount1">
         <h5>Cut Lengths (kerf removed)</h5>
         <div id="cutLengthsWithKerf">
           <span id="longCutWithKerf"></span> in. / <span id="shortCutWithKerf"></span> in.
@@ -57,11 +65,24 @@ layout: default
         </div>
       </div>
 
-      <div>
+      <div class="cutCountContainer cutCount1">
         <h5>Full Trapezoid Lengths (kerf removed)</h5>
         <div id="sideLengths">
           <span id="longSide"></span> in. / <span id="shortSide"></span> in.
           <div id="sideLengthsStone"></div>
+        </div>
+      </div>
+
+      <div class="cutCountContainer cutCount2">
+        <h5>Trapezoid Side Lengths</h5>
+        <div id="fullSideLengths">
+          <div>
+            <span id="fullLongSide"></span> in. / <span id="fullShortSide"></span> in.
+          </div>
+          <div>
+            <span id="cutFromEdge"></span> in. from edge
+          </div>
+          <div id="fullSideLengthsStone"></div>
         </div>
       </div>
     </div>
