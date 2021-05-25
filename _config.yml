@@ -18,8 +18,8 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Trapezoid Circle with Single Cut per Stone
-baseurl: "" # the subpath of your site, e.g. /blog
+title: Stone Trapezoid Circle
+baseurl: "/stone-trapezoid-circle" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: michaelgpearce
 
