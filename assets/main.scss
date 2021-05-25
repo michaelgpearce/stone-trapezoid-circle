@@ -6,6 +6,10 @@ $content-width: 1280px;
 
 @import "minima";
 
+.site-header {
+  border-top: 0;
+}
+
 .home {
   display: flex;
   justify-content: space-between;
